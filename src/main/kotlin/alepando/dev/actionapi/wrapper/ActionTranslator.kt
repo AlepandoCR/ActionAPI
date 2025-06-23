@@ -6,10 +6,10 @@ internal object ActionTranslator {
     /**
      * Converts from NMS enum to the wrapper.
      *
-     * @return Corresponding [PlayerAction].
+     * @return Corresponding [ActionType].
      */
-    fun ServerboundPlayerActionPacket.Action.toApi(): PlayerAction {
-        return PlayerAction.valueOf(this.name)
+    fun ServerboundPlayerActionPacket.Action.toApi(): ActionType {
+        return ActionType.valueOf(this.name)
     }
 
     /**
@@ -17,7 +17,7 @@ internal object ActionTranslator {
      *
      * @return Corresponding [ServerboundPlayerActionPacket.Action].
      */
-    fun PlayerAction.toNMS(): ServerboundPlayerActionPacket.Action {
+    fun ActionType.toNMS(): ServerboundPlayerActionPacket.Action {
         return ServerboundPlayerActionPacket.Action.valueOf(name)
     }
 
