@@ -11,6 +11,7 @@ import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
+import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 internal object PacketSniffer {
@@ -28,7 +29,12 @@ internal object PacketSniffer {
         val handler = object : ChannelDuplexHandler() {
             override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
                 if(msg is ServerboundPlayerActionPacket){
-                    PlayerActionEvent(player, msg.action.toApi()).callEvent()
+                    object : BukkitRunnable(){
+                        override fun run() {
+                            PlayerActionEvent(player,msg.action.toApi()).callEvent()
+                        }
+
+                    }.runTask(plugin)
                 }
                 super.channelRead(ctx, msg)
             }
