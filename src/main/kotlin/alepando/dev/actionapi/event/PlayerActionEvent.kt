@@ -5,14 +5,17 @@ import org.bukkit.entity.Player
 import org.bukkit.event.HandlerList
 import org.bukkit.event.player.PlayerEvent
 
-class PlayerActionEvent(player: Player, private val action: ActionType): PlayerEvent(player) {
-    private val handlerList: HandlerList = HandlerList()
+class PlayerActionEvent(player: Player, private val action: ActionType) : PlayerEvent(player) {
 
-    override fun getHandlers(): HandlerList {
-        return this.handlerList
-    }
+    override fun getHandlers(): HandlerList = handlerList
 
-    fun getAction(): ActionType {
-        return action
+    fun getAction(): ActionType = action
+
+    companion object {
+        @JvmStatic
+        private val handlerList = HandlerList()
+
+        @JvmStatic
+        fun getHandlerList(): HandlerList = handlerList
     }
 }
