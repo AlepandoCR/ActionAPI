@@ -18,8 +18,10 @@ internal object PacketSniffer {
 
     private val injectedPlayers = mutableSetOf<UUID>()
 
+    private const val HANDLER_SUFIX = "_action_sniffer"
+
     fun inject(player: Player, plugin: Plugin) {
-        val handlerName = "${plugin.name.lowercase()}_action_sniffer"
+        val handlerName = "${plugin.name.lowercase()}$HANDLER_SUFIX"
         val nmsPlayer = (player as CraftPlayer).handle
         val connection: Connection = nmsPlayer.connection.connection
         val channel = connection.channel
@@ -50,7 +52,7 @@ internal object PacketSniffer {
         val connection = nmsPlayer.connection.connection
         val channel = connection.channel
 
-        channel.pipeline().names().filter { it.endsWith("_action_sniffer") }.forEach {
+        channel.pipeline().names().filter { it.endsWith(HANDLER_SUFIX) }.forEach {
             channel.pipeline().remove(it)
         }
 
@@ -67,8 +69,7 @@ internal object PacketSniffer {
     fun cleanOrphanedPipelines(plugin: Plugin) {
         val serverConnections = MinecraftServer.getServer().connection.connections
 
-        val handlerSuffix = "_action_sniffer"
-        val handlerName = "${plugin.name.lowercase()}$handlerSuffix"
+        val handlerName = "${plugin.name.lowercase()}$HANDLER_SUFIX"
 
         serverConnections.forEach { conn ->
             val channel = conn.channel
