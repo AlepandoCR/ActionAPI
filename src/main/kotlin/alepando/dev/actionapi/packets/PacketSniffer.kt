@@ -67,7 +67,7 @@ internal object PacketSniffer {
     fun cleanOrphanedPipelines(plugin: Plugin) {
         val serverConnections = MinecraftServer.getServer().connection.connections
 
-        val handlerSuffix = "_dialog_sniffer"
+        val handlerSuffix = "_action_sniffer"
         val handlerName = "${plugin.name.lowercase()}$handlerSuffix"
 
         serverConnections.forEach { conn ->
